@@ -37,7 +37,47 @@ Polynomial::~Polynomial(){
 	delete[] _coefficients;
 }
 const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
-	return Polynomial(0);
+	//Value to store highest degree of two summed poly's
+	int highDeg = 0;
+	//Variable to determine for loop max
+	int max = 0;
+
+	if (rhs._degree > this->_degree)
+	{
+		highDeg = rhs._degree;
+		max = this->_degree; //To prevent out-of-bounds array access later
+	}
+	else
+	{
+		highDeg = this->_degree;
+		max = rhs._degree; // "   "       "   "   "    "       "    "
+	}
+	//Polynomial object (*eventually returned) to sum 
+	Polynomial newPoly(highDeg);
+
+	//Summing elements of this and rhs to be stored in newPoly polynomial
+	int i = 0;
+	while (i < max)
+	{
+		newPoly._coefficients[i] = rhs._coefficients[i] + this->_coefficients[i];
+		i++;
+	}
+	//Adding rest of longest polynomial to newPoly
+	if (rhs._degree > this->_degree)
+	{
+		for (int j = i; j < rhs._degree; j++)
+		{
+			newPoly._coefficients[i] = rhs._coefficients[i];
+		}
+	}
+	else if (rhs._degree < this->_degree)
+	{
+		for (int j = i; j < this->_degree; j++)
+		{
+			newPoly._coefficients[i] = this->_coefficients[i];
+		}
+	}
+	return newPoly;
 }
 const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
 	return Polynomial(0);
