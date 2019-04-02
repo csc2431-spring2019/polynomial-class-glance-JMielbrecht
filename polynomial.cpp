@@ -38,43 +38,44 @@ Polynomial::~Polynomial(){
 }
 const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
 	//Value to store highest degree of two summed poly's
-	int highDeg = 0;
+	size_t highDeg = 0;
 	//Variable to determine for loop max
-	int max = 0;
+	size_t max = 0;
 
-	if (rhs._degree > this->_degree)
+	if (rhs._degree > _degree)
 	{
 		highDeg = rhs._degree;
-		max = this->_degree; //To prevent out-of-bounds array access later
+		max = _degree; //To prevent out-of-bounds array access later
 	}
 	else
 	{
-		highDeg = this->_degree;
+		highDeg = _degree;
 		max = rhs._degree; // "   "       "   "   "    "       "    "
 	}
+
 	//Polynomial object (*eventually returned) to sum 
 	Polynomial newPoly(highDeg);
 
 	//Summing elements of this and rhs to be stored in newPoly polynomial
-	int i = 0;
-	while (i < max)
+	size_t i = 0;
+	while (i < max+1)
 	{
-		newPoly._coefficients[i] = rhs._coefficients[i] + this->_coefficients[i];
+		newPoly._coefficients[i] = rhs._coefficients[i] + _coefficients[i];
 		i++;
 	}
 	//Adding rest of longest polynomial to newPoly
-	if (rhs._degree > this->_degree)
+	if (rhs._degree > _degree)
 	{
-		for (int j = i; j < rhs._degree; j++)
+		for (size_t j = i; j < rhs._degree+1; j++)
 		{
 			newPoly._coefficients[i] = rhs._coefficients[i];
 		}
 	}
-	else if (rhs._degree < this->_degree)
+	else if (rhs._degree < _degree)
 	{
-		for (int j = i; j < this->_degree; j++)
+		for (size_t j = i; j < _degree+1; j++)
 		{
-			newPoly._coefficients[i] = this->_coefficients[i];
+			newPoly._coefficients[i] = _coefficients[i];
 		}
 	}
 	return newPoly;
