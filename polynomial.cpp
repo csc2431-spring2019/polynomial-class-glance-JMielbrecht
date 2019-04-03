@@ -54,31 +54,31 @@ const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
 	}
 
 	//Polynomial object (*eventually returned) to sum 
-	Polynomial newPoly(highDeg);
+	Polynomial sumPoly(highDeg);
 
-	//Summing elements of this and rhs to be stored in newPoly polynomial
+	//Summing elements of this and rhs to be stored in sumPoly polynomial
 	size_t i = 0;
 	while (i < max+1)
 	{
-		newPoly._coefficients[i] = rhs._coefficients[i] + _coefficients[i];
+		sumPoly._coefficients[i] = rhs._coefficients[i] + _coefficients[i];
 		i++;
 	}
-	//Adding rest of longest polynomial to newPoly
+	//Adding rest of longest polynomial to sumPoly
 	if (rhs._degree > _degree)
 	{
 		for (size_t j = i; j < rhs._degree+1; j++)
 		{
-			newPoly._coefficients[i] = rhs._coefficients[i];
+			sumPoly._coefficients[i] = rhs._coefficients[i];
 		}
 	}
 	else if (rhs._degree < _degree)
 	{
 		for (size_t j = i; j < _degree+1; j++)
 		{
-			newPoly._coefficients[i] = _coefficients[i];
+			sumPoly._coefficients[i] = _coefficients[i];
 		}
 	}
-	return newPoly;
+	return sumPoly;
 }
 const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
 	return Polynomial(0);
