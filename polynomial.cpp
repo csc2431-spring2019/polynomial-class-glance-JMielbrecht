@@ -81,7 +81,57 @@ const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
 	return sumPoly;
 }
 const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
-	return Polynomial(0);
+	//Value to store highest degree of substracted poly's
+	size_t highDeg = 0;
+	//Variable to determine while loop max
+	size_t max = 0;
+
+	if (rhs._degree > _degree)
+	{
+		highDeg = rhs._degree;
+		max = _degree; //To prevent out-of-bounds array access later
+
+		//Polynomial object (*eventually returned) to sum 
+		Polynomial subPoly(highDeg);
+
+		//While loop for subtraction
+		size_t i = 0;
+		while(i < max+1)
+		{
+			subPoly._coefficients[i] = _coefficients[i] - rhs._coefficients[i];
+			i++;
+		}
+		//In order to complete subtraction, rhs' coefficients must be run through and "added" (negatively) to subPoly
+		for (size_t j = i; j < highDeg+1; j++)
+		{
+			subPoly._coefficients[j] = 0 - rhs._coefficients[i];
+		}
+		return subPoly;
+	}
+	else
+	{
+		highDeg = _degree;
+		max = rhs._degree; // "   "       "   "   "    "       "    "
+
+		//Polynomial object (*eventually returned) to sum 
+		Polynomial subPoly(highDeg);
+
+		//While loop for subtraction
+		size_t i = 0;
+		while (i < max+1)
+		{
+			subPoly._coefficients[i] = _coefficients[i] - rhs._coefficients[i];
+			i++;
+		}
+
+		//NOTE: Because [this] is greater in degree than rhs, we don't have to worry about "completing" subtraction in another loop
+		//		Instead, we simply load the rest of _coefficients into subPoly._coefficients.
+		for (size_t j = i; j < highDeg+1; j++)
+		{
+			subPoly._coefficients[j] = _coefficients[j];
+		}
+		return subPoly;
+	}
 }
 const Polynomial Polynomial::Minus()const{
 	Polynomial retVal(*this);
