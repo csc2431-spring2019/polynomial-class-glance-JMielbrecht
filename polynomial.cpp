@@ -141,6 +141,27 @@ const Polynomial Polynomial::Minus()const{
 	return retVal;
 }
 const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
+	//Var to store smallest _degree 
+	size_t min = 0;
+	//Returned poly with degree that is rhs._degree * _degree
+	Polynomial multPoly(_degree*rhs._degree);
+	
+	if (_degree < rhs._degree)
+	{
+		min = _degree;
+	}
+	else
+	{
+		min = rhs._degree;
+	}
+
+	for (size_t i = 0; i < min; i++)
+	{
+		for (size_t j = 0; j < min; j++)
+		{
+
+		}
+	}
 	return Polynomial(0);
 }
 const Polynomial Polynomial::Divide(const Polynomial& rhs)const{
