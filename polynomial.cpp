@@ -141,11 +141,11 @@ const Polynomial Polynomial::Minus()const{
 	return retVal;
 }
 const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
-	//Var to store smallest _degree 
+	/*//Var to store smallest _degree 
 	size_t min = 0;
-	//Returned poly with degree that is rhs._degree * _degree
-	Polynomial multPoly(_degree*rhs._degree);
-	
+	//Returned poly with degree that is rhs._degree * _degree + 1
+	Polynomial multPoly((_degree*rhs._degree) + 1);
+
 	if (_degree < rhs._degree)
 	{
 		min = _degree;
@@ -155,20 +155,44 @@ const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
 		min = rhs._degree;
 	}
 
-	for (size_t i = 0; i < min; i++)
+	for (size_t i = multPoly._degree; i >= 0; i--)
 	{
 		for (size_t j = 0; j < min; j++)
 		{
-
+			multPoly._coefficients[i] = _coefficients[j] * rhs._coefficients[j];
 		}
-	}
+	} */
 	return Polynomial(0);
 }
 const Polynomial Polynomial::Divide(const Polynomial& rhs)const{
 	return Polynomial(0);
 }
 const Polynomial Polynomial::Derive()const{
-	return Polynomial(0);
+	//Iterating through each coefficient and multiplying it by i (a la the Power Rule of calculus)
+	for (size_t i = 0; i < _degree+1; i++)
+	{
+		_coefficients[i] *= i; //Multiplied by the degree
+	}
+
+	//Creating temporary float to store coefficients
+	float temp;
+	//Downshifting all _coefficients elements a degree
+	for (size_t i = 0; i < _degree; i++)
+	{
+		temp = _coefficients[i];
+		_coefficients[i] = _coefficients[i+1];
+		_coefficients[i+1] = temp;
+	}
+
+	//Creating new polynomial with _degree one less than [this]
+	Polynomial derivedPoly(_degree-1);
+	//Creating shallow copy of [this]._coefficients that will be returned
+	for (size_t i = 0; i < derivedPoly._degree+1; i++)
+	{
+		derivedPoly._coefficients[i] = _coefficients[i];
+	}
+
+	return derivedPoly;
 }
 float Polynomial::Evaluate(float x)const{
 	return FLT_MAX;
