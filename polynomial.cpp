@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cfloat>
+#include <cmath> //For pow method
 
 using std::istream;
 using std::ostream;
@@ -53,7 +54,7 @@ const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
 		max = rhs._degree; // "   "       "   "   "    "       "    "
 	}
 
-	//Polynomial object (*eventually returned) to sum 
+	//Polynomial object (*eventually returned) to sum
 	Polynomial sumPoly(highDeg);
 
 	//Summing elements of this and rhs to be stored in sumPoly polynomial
@@ -91,7 +92,7 @@ const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
 		highDeg = rhs._degree;
 		max = _degree; //To prevent out-of-bounds array access later
 
-		//Polynomial object (*eventually returned) to sum 
+		//Polynomial object (*eventually returned) to sum
 		Polynomial subPoly(highDeg);
 
 		//While loop for subtraction
@@ -113,7 +114,7 @@ const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
 		highDeg = _degree;
 		max = rhs._degree; // "   "       "   "   "    "       "    "
 
-		//Polynomial object (*eventually returned) to sum 
+		//Polynomial object (*eventually returned) to sum
 		Polynomial subPoly(highDeg);
 
 		//While loop for subtraction
@@ -141,7 +142,7 @@ const Polynomial Polynomial::Minus()const{
 	return retVal;
 }
 const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
-	/*//Var to store smallest _degree 
+	/*//Var to store smallest _degree
 	size_t min = 0;
 	//Returned poly with degree that is rhs._degree * _degree + 1
 	Polynomial multPoly((_degree*rhs._degree) + 1);
@@ -195,7 +196,14 @@ const Polynomial Polynomial::Derive()const{
 	return derivedPoly;
 }
 float Polynomial::Evaluate(float x)const{
-	return FLT_MAX;
+	//Returned evaluation
+	float answer = 0;
+	for (size_t i = 0; i < _degree+1; i++)
+	{
+		answer += _coefficients[i]*pow(x, i); //Adding product of coefficient * x^i
+	}
+
+	return answer;
 }
 float Polynomial::Integrate(float start, float end)const{
 	return FLT_MAX;
