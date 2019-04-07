@@ -142,28 +142,34 @@ const Polynomial Polynomial::Minus()const{
 	return retVal;
 }
 const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
-	/*//Var to store smallest _degree
-	size_t min = 0;
+
 	//Returned poly with degree that is rhs._degree * _degree + 1
-	Polynomial multPoly((_degree*rhs._degree) + 1);
+	Polynomial multPoly(_degree+rhs._degree);
 
 	if (_degree < rhs._degree)
 	{
-		min = _degree;
+		//Nested for loop "distributes" _coefficients[i] to each member of rhs._coefficients
+		for (size_t i = 0; i < _degree+1; i++)
+		{
+			for (size_t j = 0; j < rhs._degree+1; j++)
+			{
+				multPoly._coefficients[i+j] += _coefficients[i] * rhs._coefficients[j];
+			}
+		}
+		return multPoly;
 	}
 	else
 	{
-		min = rhs._degree;
-	}
-
-	for (size_t i = multPoly._degree; i >= 0; i--)
-	{
-		for (size_t j = 0; j < min; j++)
+		//Nested for loop "distributes" rhs._coefficients[i] to each member of _coefficients
+		for (size_t i = 0; i < rhs._degree+1; i++)
 		{
-			multPoly._coefficients[i] = _coefficients[j] * rhs._coefficients[j];
+			for (size_t j = 0; j < _degree+1; j++)
+			{
+				multPoly._coefficients[i+j] += rhs._coefficients[i] * _coefficients[j];
+			}
 		}
-	} */
-	return Polynomial(0);
+		return multPoly;
+	}
 }
 const Polynomial Polynomial::Divide(const Polynomial& rhs)const{
 	return Polynomial(0);
